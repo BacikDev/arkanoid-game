@@ -32,7 +32,17 @@ function collisionDetection(){}
 
 //Movimiento de la pelotita
 function ballMovement(){
+    //Rebotar en las paredes
+    if(
+        x + dx > canvas.width - ballRadius || //Pared derecha
+        x + dx < ballRadius //Pared izuierda
+
+    ){
+        dx = -dx
+    }
+
     x += dx
+    y += dy
 }
 
 function paddleMovement(){}

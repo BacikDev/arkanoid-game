@@ -23,6 +23,11 @@ const paddleWidth = 50;
 let paddleX = (canvas.width - paddleWidth) / 2
 let paddleY = canvas.height - paddleHeight - 10
 
+let rightPressed = false
+let leftPressed = false
+
+const PADDLE_SENSIBILITY = 8
+
 //Dibujando la pelotita
 function drawBall() {
     ctx.beginPath()
@@ -69,16 +74,44 @@ function ballMovement(){
     y += dy
 }
 
-function paddleMovement(){}
+function paddleMovement(){
+    if(rightPressed){
+        paddleX += PADDLE_SENSIBILITY
+    }else if (leftPressed){
+    paddleX -= PADDLE_SENSIBILITY
+}    
+}
 
 //Funcion para limpiar el recorrido de la pelotita
 function cleanCanvas(){
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
+function initEvents(){
+    document.addEventListener("keydown", keyDownHandler)
+    document.addEventListener("keyup", keyUpHandler)
+
+    function keyDownHandler(event){
+        const { key } = event
+        if (key === 'Right' || key === 'ArrowRight'){
+            rightPressed = true
+        }else if (key === 'Left' || key === 'ArrowLeft'){
+            leftPressed = true
+        }
+    }
+
+    function keyUpHandler(event){
+        const {key} = event
+        if(key === 'Right' || key === 'ArrowRight'){
+            rightPressed = false
+        }else if (key === 'Left' || key === 'ArrowLeft'){
+            leftPressed = false
+        }
+    }
+}
+
 function draw(){
     //Dibujar los elementos
-    
     cleanCanvas()
     drawBall()
     drawPaddle()
@@ -86,9 +119,11 @@ function draw(){
     
     collisionDetection()
     ballMovement()
+    paddleMovement()
     //paddleMovement()
 
     window.requestAnimationFrame(draw)
 }
 
 draw()
+initEvents()

@@ -75,9 +75,9 @@ function ballMovement(){
 }
 
 function paddleMovement(){
-    if(rightPressed){
+    if(rightPressed && paddleX < canvas.width - paddleWidth){
         paddleX += PADDLE_SENSIBILITY
-    }else if (leftPressed){
+    }else if (leftPressed && paddleX > 0){
     paddleX -= PADDLE_SENSIBILITY
 }    
 }

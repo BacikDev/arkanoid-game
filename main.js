@@ -16,6 +16,13 @@ let y = canvas.height - 30
 let dx = 2
 let dy = -2
 
+//Variable de la paleta
+const paddleHeight = 10;
+const paddleWidth = 50;
+
+let paddleX = (canvas.width - paddleWidth) / 2
+let paddleY = canvas.height - paddleHeight - 10
+
 //Dibujando la pelotita
 function drawBall() {
     ctx.beginPath()
@@ -25,7 +32,14 @@ function drawBall() {
     ctx.closePath()
 }
 
-function drawPaddle(){}
+function drawPaddle(){
+    ctx.fillStyle = '#09f'
+    ctx.fillRect(
+        paddleX, //La coordenada X
+        paddleY, //La coordenada Y
+        paddleWidth, //El ancho del dibujo 
+        paddleHeight)//El alto del dibujo
+}
 function drawBricks(){}
 
 function collisionDetection(){}
@@ -39,6 +53,16 @@ function ballMovement(){
 
     ){
         dx = -dx
+    }
+
+    //Rebotar en la parte de arriba
+    if(y + dy < ballRadius){
+        dy = -dy
+    }
+
+    //Game over
+    if(y + dy > canvas.height - ballRadius){
+        document.location.reload();
     }
 
     x += dx

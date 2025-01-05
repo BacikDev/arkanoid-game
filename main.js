@@ -26,7 +26,7 @@ let paddleY = canvas.height - paddleHeight - 10
 let rightPressed = false
 let leftPressed = false
 
-const PADDLE_SENSIBILITY = 8
+const PADDLE_SENSITIVITY = 8
 
 //Dibujando la pelotita
 function drawBall() {
@@ -64,9 +64,16 @@ function ballMovement(){
     if(y + dy < ballRadius){
         dy = -dy
     }
+const isBallSameXAsPaddle = 
+    x > paddleX &&
+    x < paddleX + paddleWidth
 
-    //Game over
-    if(y + dy > canvas.height - ballRadius){
+const isBallTouchingPaddle =
+    y + dy > paddleY
+
+    if(isBallSameXAsPaddle && isBallTouchingPaddle){
+        dy = -dy //Cambiamos la dirección de la pelota de abajo para arriba
+    } else if(y + dy > canvas.height - ballRadius){ //Game over
         document.location.reload();
     }
 
@@ -76,9 +83,9 @@ function ballMovement(){
 
 function paddleMovement(){
     if(rightPressed && paddleX < canvas.width - paddleWidth){
-        paddleX += PADDLE_SENSIBILITY
+        paddleX += PADDLE_SENSITIVITY
     }else if (leftPressed && paddleX > 0){
-    paddleX -= PADDLE_SENSIBILITY
+    paddleX -= PADDLE_SENSITIVITY
 }    
 }
 
